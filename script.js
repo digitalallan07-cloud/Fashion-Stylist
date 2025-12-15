@@ -386,6 +386,78 @@ gsap.fromTo('.stat-item',
 );
 
 // ============================================
+// PORTFOLIO GALLERY GRID
+// ============================================
+
+// Animate gallery header
+gsap.fromTo('.gallery-header h2',
+  { opacity: 0, y: 50 },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.portfolio-gallery',
+      start: 'top 70%',
+      toggleActions: 'play none none reverse'
+    }
+  }
+);
+
+gsap.fromTo('.gallery-header p',
+  { opacity: 0, y: 30 },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    delay: 0.2,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.portfolio-gallery',
+      start: 'top 70%',
+      toggleActions: 'play none none reverse'
+    }
+  }
+);
+
+// Animate grid items with stagger
+gsap.fromTo('.masonry-grid .grid-item',
+  { opacity: 0, y: 60, scale: 0.95 },
+  {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    duration: 0.8,
+    stagger: {
+      amount: 1.2,
+      from: 'start'
+    },
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.masonry-grid',
+      start: 'top 75%',
+      toggleActions: 'play none none reverse'
+    }
+  }
+);
+
+// Add visible class for CSS transitions
+const gridObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, {
+  threshold: 0.1
+});
+
+document.querySelectorAll('.masonry-grid .grid-item').forEach(item => {
+  gridObserver.observe(item);
+});
+
+// ============================================
 // CONTACT SECTION
 // ============================================
 

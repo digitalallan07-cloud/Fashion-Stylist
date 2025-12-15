@@ -297,6 +297,115 @@ body {
 }
 
 /* ========================================
+   PORTFOLIO GALLERY GRID
+   ======================================== */
+
+.portfolio-gallery {
+  min-height: 100vh;
+  background: var(--bg-light);
+  padding: 120px 60px;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.gallery-header h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  margin-bottom: 20px;
+  color: var(--text-dark);
+}
+
+.gallery-header p {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  font-weight: 300;
+}
+
+/* Masonry Grid Layout */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: 300px;
+  gap: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.grid-item {
+  background-size: cover;
+  background-position: center;
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.grid-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Masonry variations for visual interest */
+.grid-item.grid-tall {
+  grid-row: span 2;
+}
+
+.grid-item.grid-wide {
+  grid-column: span 2;
+}
+
+/* Hover overlay effect */
+.grid-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.7));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.grid-item:hover::before {
+  opacity: 1;
+}
+
+/* Hover text overlay */
+.grid-item::after {
+  content: 'View';
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 400;
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+.grid-item:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.grid-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+/* ========================================
    ABOUT SECTION
    ======================================== */
 
@@ -468,6 +577,12 @@ body {
     width: 50vw !important;
     height: 50vh !important;
   }
+
+  /* Portfolio gallery adjustments */
+  .masonry-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 250px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -519,6 +634,23 @@ body {
   .stats-grid {
     grid-template-columns: 1fr;
     gap: 25px;
+  }
+
+  /* Portfolio gallery mobile */
+  .portfolio-gallery {
+    padding: 80px 30px;
+  }
+
+  .masonry-grid {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 350px;
+    gap: 15px;
+  }
+
+  .grid-item.grid-tall,
+  .grid-item.grid-wide {
+    grid-row: span 1;
+    grid-column: span 1;
   }
 }
 
