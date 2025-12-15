@@ -6,45 +6,129 @@
   <title>Fashion Stylist Portfolio</title>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+  <!-- Loading Animation -->
+  <div class="loader" id="loader">
+    <div class="loader-content">
+      <div class="loader-text">
+        <span class="letter">F</span>
+        <span class="letter">A</span>
+        <span class="letter">S</span>
+        <span class="letter">H</span>
+        <span class="letter">I</span>
+        <span class="letter">O</span>
+        <span class="letter">N</span>
+      </div>
+      <div class="loader-bar"></div>
+    </div>
+  </div>
+
+  <!-- Floating Particles Background -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="hero">
+    <div class="hero-bg-layer layer1"></div>
+    <div class="hero-bg-layer layer2"></div>
+    <div class="hero-bg-layer layer3"></div>
     <div class="hero-overlay">
-      <h1>Fashion Stylist</h1>
-      <p>Styling for Editorial, Luxury & Contemporary Fashion</p>
+      <div class="hero-content">
+        <h1 class="hero-title">
+          <span class="title-line">
+            <span class="title-word">Fashion</span>
+          </span>
+          <span class="title-line">
+            <span class="title-word">Stylist</span>
+          </span>
+        </h1>
+        <p class="hero-subtitle">Styling for Editorial, Luxury & Contemporary Fashion</p>
+        <div class="hero-scroll">
+          <span>Scroll to explore</span>
+          <div class="scroll-indicator"></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- PORTFOLIO -->
-  <section class="portfolio">
-    <h2>Selected Work</h2>
+  <section class="portfolio" id="portfolio">
+    <div class="section-header">
+      <h2 class="section-title reveal-text">Selected Work</h2>
+      <p class="section-subtitle reveal-text">Curated collection of editorial and campaign styling</p>
+    </div>
     <div class="grid" id="portfolioGrid">
       <!-- Images injected via JS -->
     </div>
   </section>
 
+  <!-- FEATURED WORK -->
+  <section class="featured">
+    <div class="featured-content">
+      <div class="featured-image reveal-scale">
+        <img src="https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/Lagado-381.jpg" alt="Featured work" />
+      </div>
+      <div class="featured-text reveal-slide">
+        <h3>Editorial Excellence</h3>
+        <p>Combining contemporary aesthetics with timeless elegance. Each styling decision tells a story, creating visual narratives that resonate with modern sensibilities while honoring classic fashion principles.</p>
+        <div class="featured-stats">
+          <div class="stat">
+            <span class="stat-number">150+</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">50+</span>
+            <span class="stat-label">Publications</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">25+</span>
+            <span class="stat-label">Brands</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ABOUT -->
   <section class="about">
-    <h2>About</h2>
-    <p>
-      Fashion stylist working across editorial shoots, luxury campaigns,
-      and contemporary fashion brands. Focused on clean silhouettes,
-      refined styling, and visual storytelling.
-    </p>
+    <div class="about-content">
+      <h2 class="section-title reveal-text">About</h2>
+      <p class="reveal-text">
+        Fashion stylist working across editorial shoots, luxury campaigns,
+        and contemporary fashion brands. Focused on clean silhouettes,
+        refined styling, and visual storytelling that bridges the gap between
+        artistic vision and commercial appeal.
+      </p>
+      <div class="about-services reveal-text">
+        <div class="service">Editorial Styling</div>
+        <div class="service">Campaign Direction</div>
+        <div class="service">Personal Styling</div>
+        <div class="service">Brand Consulting</div>
+      </div>
+    </div>
   </section>
 
   <!-- CONTACT -->
   <section class="contact">
-    <h2>Contact</h2>
-    <p>Email: stylist@email.com</p>
-    <p>Instagram: @stylistname</p>
+    <div class="contact-content reveal-text">
+      <h2 class="section-title">Let's Create Together</h2>
+      <div class="contact-info">
+        <a href="mailto:stylist@email.com" class="contact-link">stylist@email.com</a>
+        <a href="https://instagram.com/stylistname" class="contact-link">@stylistname</a>
+      </div>
+    </div>
+    <div class="footer">
+      <p>&copy; 2024 Fashion Stylist. All rights reserved.</p>
+    </div>
   </section>
 
   <!-- JS -->
