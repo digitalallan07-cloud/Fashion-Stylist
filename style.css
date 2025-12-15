@@ -279,6 +279,10 @@ body {
   animation-delay: 1.2s;
 }
 
+.title-line:nth-child(3) .title-word {
+  animation-delay: 1.4s;
+}
+
 @keyframes slideInUp {
   from {
     transform: translateY(100%);
