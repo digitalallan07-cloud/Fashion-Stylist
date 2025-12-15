@@ -29,16 +29,19 @@
 
 3. **Follow the prompts** to complete deployment
 
-## Important: Add Your Images
+## ✅ Images Already Configured
 
-Before deploying, make sure to add your fashion images:
+Your fashion portfolio images are already configured and hosted on a CDN for optimal performance:
 
-1. Create a folder called `stylist-images` in the project root
-2. Add these images:
-   - `hero.jpg` - Main hero background image
-   - `image1.jpg` to `image12.jpg` - Portfolio images
+- **Hero Background**: High-quality editorial image
+- **Portfolio Grid**: 12 curated fashion styling images
+- **Featured Work**: Showcase image with 3D tilt effect
 
-The images should be high quality (1920x1080 or larger for best results).
+All images are loaded from your CDN (sirv.com) for:
+- Fast global delivery
+- Automatic optimization
+- No repository bloat
+- Easy image management
 
 ## Environment Setup
 

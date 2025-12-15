@@ -2,6 +2,22 @@
 const imageCount = 12;
 const particleCount = 30;
 
+// Portfolio Images - Hosted on CDN
+const portfolioImages = [
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/Lagado-381.jpg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/SHOOT-354.jpeg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/Lagado-544.jpg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/CYHWOCVFJY_10.jpg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/NFUPV7XZIS_57.jpg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/DXB95FAWXV_MAGRABI_EDITORIAL_98.jpg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/SHOOT 128.JPG',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/CYHWOCVFJY_5.jpg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/NFUPV7XZIS_119.jpg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/CYHWOCVFJY_26.jpg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/SHOOT 15.jpg',
+  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/CYHWOCVFJY_23.jpg'
+];
+
 // DOM Elements
 const loader = document.getElementById('loader');
 const cursor = document.getElementById('cursor');
@@ -86,13 +102,13 @@ createParticles();
 
 // Portfolio Grid - Create Image Items
 function createPortfolioGrid() {
-  for (let i = 1; i <= imageCount; i++) {
+  portfolioImages.forEach((imageSrc, index) => {
     const gridItem = document.createElement('div');
     gridItem.classList.add('grid-item');
 
     const img = document.createElement('img');
-    img.src = `stylist-images/image${i}.jpg`;
-    img.alt = `Styling work ${i}`;
+    img.src = imageSrc;
+    img.alt = `Fashion styling work ${index + 1}`;
     img.loading = 'lazy';
 
     gridItem.appendChild(img);
@@ -101,8 +117,8 @@ function createPortfolioGrid() {
     // Add staggered delay for animation
     setTimeout(() => {
       gridItem.classList.add('active');
-    }, i * 100);
-  }
+    }, (index + 1) * 100);
+  });
 
   // Add hover effects after creation
   setTimeout(() => {
