@@ -4,11 +4,14 @@ A clean, modern portfolio website for fashion styling showcasing editorial work,
 
 ## Setup
 
-### 1. Add Your Images
+### 1. Images
 
-Add your 5 fashion/jewelry images to the `stylist-images/` directory:
-- `hero.jpg` - Main hero background image
-- `image1.jpg` through `image5.jpg` - Portfolio gallery images
+This portfolio uses **Sirv CDN** for fast, optimized image delivery. All 24 portfolio images are hosted on Sirv, providing:
+- Fast loading times with CDN
+- Automatic image optimization
+- No large files in the repository
+
+The images are configured in `script.js` and `style.css`.
 
 ### 2. Deploy to Vercel
 
