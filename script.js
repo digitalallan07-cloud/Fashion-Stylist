@@ -1,403 +1,460 @@
-// Configuration
-const imageCount = 12;
-const particleCount = 30;
+/*
+ * ============================================
+ * LUXURY EDITORIAL PORTFOLIO
+ * Cinematic Scroll-Driven Experience
+ * GSAP + ScrollTrigger Implementation
+ * ============================================
+ */
 
-// Portfolio Images - Hosted on CDN
-const portfolioImages = [
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/Lagado-381.jpg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/SHOOT-354.jpeg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/Lagado-544.jpg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/CYHWOCVFJY_10.jpg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/NFUPV7XZIS_57.jpg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/DXB95FAWXV_MAGRABI_EDITORIAL_98.jpg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/SHOOT 128.JPG',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/CYHWOCVFJY_5.jpg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/NFUPV7XZIS_119.jpg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/CYHWOCVFJY_26.jpg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/SHOOT 15.jpg',
-  'https://trupthi.sirv.com/Fashion Stylist portfolio/Stylist portfolio/CYHWOCVFJY_23.jpg'
-];
+gsap.registerPlugin(ScrollTrigger);
 
-// DOM Elements
-const loader = document.getElementById('loader');
-const cursor = document.getElementById('cursor');
-const cursorFollower = document.getElementById('cursorFollower');
-const particles = document.getElementById('particles');
-const portfolioGrid = document.getElementById('portfolioGrid');
+// ============================================
+// HERO INTRO ANIMATION
+// ============================================
 
-// Custom Cursor
-let mouseX = 0;
-let mouseY = 0;
-let cursorX = 0;
-let cursorY = 0;
-let followerX = 0;
-let followerY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
-function animateCursor() {
-  // Smooth cursor movement with easing
-  const speed = 0.2;
-  const followerSpeed = 0.1;
-
-  cursorX += (mouseX - cursorX) * speed;
-  cursorY += (mouseY - cursorY) * speed;
-
-  followerX += (mouseX - followerX) * followerSpeed;
-  followerY += (mouseY - followerY) * followerSpeed;
-
-  cursor.style.left = cursorX + 'px';
-  cursor.style.top = cursorY + 'px';
-
-  cursorFollower.style.left = followerX + 'px';
-  cursorFollower.style.top = followerY + 'px';
-
-  requestAnimationFrame(animateCursor);
-}
-
-animateCursor();
-
-// Cursor hover effects
-const hoverElements = document.querySelectorAll('a, button, .grid-item, .service');
-hoverElements.forEach(element => {
-  element.addEventListener('mouseenter', () => {
-    cursor.classList.add('hover');
-  });
-  element.addEventListener('mouseleave', () => {
-    cursor.classList.remove('hover');
-  });
-});
-
-// Create Floating Particles
-function createParticles() {
-  for (let i = 0; i < particleCount; i++) {
-    const particle = document.createElement('div');
-    particle.classList.add('particle');
-
-    // Random starting position
-    particle.style.left = Math.random() * 100 + '%';
-    particle.style.bottom = Math.random() * -100 + 'px';
-
-    // Random animation duration
-    const duration = Math.random() * 10 + 15;
-    particle.style.animationDuration = duration + 's';
-
-    // Random animation delay
-    const delay = Math.random() * 5;
-    particle.style.animationDelay = delay + 's';
-
-    // Random size
-    const size = Math.random() * 3 + 2;
-    particle.style.width = size + 'px';
-    particle.style.height = size + 'px';
-
-    particles.appendChild(particle);
+const heroTimeline = gsap.timeline({
+  defaults: {
+    ease: 'power3.out',
+    duration: 1.2
   }
-}
+});
 
-createParticles();
+heroTimeline
+  .to('.hero-name .line', {
+    y: 0,
+    opacity: 1,
+    stagger: 0.15,
+    delay: 0.3
+  })
+  .to('.hero-tagline', {
+    opacity: 1,
+    duration: 1
+  }, '-=0.6');
 
-// Portfolio Grid - Create Image Items
-function createPortfolioGrid() {
-  portfolioImages.forEach((imageSrc, index) => {
-    const gridItem = document.createElement('div');
-    gridItem.classList.add('grid-item');
+// ============================================
+// STORY 1 - SCROLL-DRIVEN ANIMATIONS
+// ============================================
 
-    const img = document.createElement('img');
-    img.src = imageSrc;
-    img.alt = `Fashion styling work ${index + 1}`;
-    img.loading = 'lazy';
+const story1Timeline = gsap.timeline({
+  scrollTrigger: {
+    trigger: '.story-1',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1.5,
+    // markers: true // Uncomment for debugging
+  }
+});
 
-    gridItem.appendChild(img);
-    portfolioGrid.appendChild(gridItem);
+// Initial state and entry
+story1Timeline
+  // Card 1-1: Main entrance
+  .fromTo('.card-1-1',
+    { scale: 0.85, opacity: 0, y: 100 },
+    { scale: 1, opacity: 1, y: 0, duration: 1 }
+  )
+  // Card 1-2: Delayed entrance from right
+  .fromTo('.card-1-2',
+    { scale: 0.75, opacity: 0, x: 200 },
+    { scale: 0.95, opacity: 0.9, x: 0, duration: 1 },
+    '<0.2'
+  )
+  // Card 1-3: Background entrance
+  .fromTo('.card-1-3',
+    { scale: 0.7, opacity: 0, x: -100 },
+    { scale: 0.85, opacity: 0.7, x: 0, duration: 1 },
+    '<0.15'
+  )
+  // Text reveal
+  .fromTo('.text-1-1',
+    { opacity: 0, y: 60 },
+    { opacity: 1, y: 0, duration: 0.8 },
+    '-=0.4'
+  )
 
-    // Add staggered delay for animation
-    setTimeout(() => {
-      gridItem.classList.add('active');
-    }, (index + 1) * 100);
-  });
+  // Exit: All elements scale down and fade
+  .to('.card-1-1', {
+    scale: 0.8,
+    opacity: 0.3,
+    x: -150,
+    duration: 1
+  }, '+=0.5')
+  .to('.card-1-2', {
+    scale: 0.7,
+    opacity: 0.2,
+    x: 100,
+    duration: 1
+  }, '<')
+  .to('.card-1-3', {
+    opacity: 0,
+    scale: 0.6,
+    duration: 1
+  }, '<')
+  .to('.text-1-1', {
+    opacity: 0,
+    y: -40,
+    duration: 0.6
+  }, '<0.2');
 
-  // Add hover effects after creation
-  setTimeout(() => {
-    const gridItems = document.querySelectorAll('.grid-item');
-    gridItems.forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        cursor.classList.add('hover');
-      });
-      item.addEventListener('mouseleave', () => {
-        cursor.classList.remove('hover');
-      });
-    });
-  }, 100);
-}
+// ============================================
+// STORY 2 - SCROLL-DRIVEN ANIMATIONS
+// ============================================
 
-// Parallax Scrolling Effect
-function parallaxScroll() {
-  const scrolled = window.pageYOffset;
-  const heroLayers = document.querySelectorAll('.hero-bg-layer');
+const story2Timeline = gsap.timeline({
+  scrollTrigger: {
+    trigger: '.story-2',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1.5
+  }
+});
 
-  heroLayers.forEach((layer, index) => {
-    const speed = (index + 1) * 0.15;
-    const yPos = -(scrolled * speed);
-    layer.style.transform = `translateY(${yPos}px)`;
-  });
-}
+story2Timeline
+  // Card 2-1: Entrance from right
+  .fromTo('.card-2-1',
+    { scale: 0.8, opacity: 0, x: 250 },
+    { scale: 1, opacity: 1, x: 0, duration: 1 }
+  )
+  // Card 2-2: Entrance from left
+  .fromTo('.card-2-2',
+    { scale: 0.75, opacity: 0, x: -200 },
+    { scale: 0.92, opacity: 0.85, x: 0, duration: 1 },
+    '<0.2'
+  )
+  // Card 2-3: Background layer
+  .fromTo('.card-2-3',
+    { scale: 0.65, opacity: 0, y: 80 },
+    { scale: 0.8, opacity: 0.65, y: 0, duration: 1 },
+    '<0.15'
+  )
+  // Text reveal
+  .fromTo('.text-2-1',
+    { opacity: 0, y: 60 },
+    { opacity: 1, y: 0, duration: 0.8 },
+    '-=0.4'
+  )
 
-// Scroll Reveal Animation
-function revealOnScroll() {
-  const revealElements = document.querySelectorAll('.reveal-text, .reveal-scale, .reveal-slide');
+  // Exit animations
+  .to('.card-2-1', {
+    scale: 0.75,
+    opacity: 0.25,
+    x: 200,
+    y: -50,
+    duration: 1
+  }, '+=0.5')
+  .to('.card-2-2', {
+    scale: 0.7,
+    opacity: 0.2,
+    x: -150,
+    duration: 1
+  }, '<')
+  .to('.card-2-3', {
+    opacity: 0,
+    scale: 0.6,
+    duration: 1
+  }, '<')
+  .to('.text-2-1', {
+    opacity: 0,
+    y: -40,
+    duration: 0.6
+  }, '<0.2');
 
-  revealElements.forEach(element => {
-    const elementTop = element.getBoundingClientRect().top;
-    const elementBottom = element.getBoundingClientRect().bottom;
-    const windowHeight = window.innerHeight;
+// ============================================
+// STORY 3 - SCROLL-DRIVEN ANIMATIONS
+// ============================================
 
-    if (elementTop < windowHeight * 0.85 && elementBottom > 0) {
-      element.classList.add('active');
+const story3Timeline = gsap.timeline({
+  scrollTrigger: {
+    trigger: '.story-3',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1.5
+  }
+});
+
+story3Timeline
+  // Card 3-1: Large dominant entrance
+  .fromTo('.card-3-1',
+    { scale: 0.75, opacity: 0, x: -200, y: 100 },
+    { scale: 1, opacity: 1, x: 0, y: 0, duration: 1 }
+  )
+  // Card 3-2: Side entrance
+  .fromTo('.card-3-2',
+    { scale: 0.7, opacity: 0, x: 180, y: -50 },
+    { scale: 0.9, opacity: 0.8, x: 0, y: 0, duration: 1 },
+    '<0.2'
+  )
+  // Card 3-3: Background
+  .fromTo('.card-3-3',
+    { scale: 0.6, opacity: 0, y: 100 },
+    { scale: 0.78, opacity: 0.6, y: 0, duration: 1 },
+    '<0.15'
+  )
+  // Text reveal
+  .fromTo('.text-3-1',
+    { opacity: 0, y: 60, x: 40 },
+    { opacity: 1, y: 0, x: 0, duration: 0.8 },
+    '-=0.4'
+  )
+
+  // Exit
+  .to('.card-3-1', {
+    scale: 0.7,
+    opacity: 0.2,
+    x: -180,
+    y: -60,
+    duration: 1
+  }, '+=0.5')
+  .to('.card-3-2', {
+    scale: 0.65,
+    opacity: 0.15,
+    x: 120,
+    duration: 1
+  }, '<')
+  .to('.card-3-3', {
+    opacity: 0,
+    scale: 0.5,
+    duration: 1
+  }, '<')
+  .to('.text-3-1', {
+    opacity: 0,
+    x: 40,
+    duration: 0.6
+  }, '<0.2');
+
+// ============================================
+// STORY 4 - SCROLL-DRIVEN ANIMATIONS
+// ============================================
+
+const story4Timeline = gsap.timeline({
+  scrollTrigger: {
+    trigger: '.story-4',
+    start: 'top top',
+    end: 'bottom bottom',
+    scrub: 1.5
+  }
+});
+
+story4Timeline
+  // Card 4-1: Right side dominant
+  .fromTo('.card-4-1',
+    { scale: 0.8, opacity: 0, x: 220, y: 80 },
+    { scale: 1, opacity: 1, x: 0, y: 0, duration: 1 }
+  )
+  // Card 4-2: Left complement
+  .fromTo('.card-4-2',
+    { scale: 0.72, opacity: 0, x: -180, y: 50 },
+    { scale: 0.88, opacity: 0.82, x: 0, y: 0, duration: 1 },
+    '<0.2'
+  )
+  // Card 4-3: Center background
+  .fromTo('.card-4-3',
+    { scale: 0.68, opacity: 0, y: 120 },
+    { scale: 0.8, opacity: 0.65, y: 0, duration: 1 },
+    '<0.15'
+  )
+  // Text reveal
+  .fromTo('.text-4-1',
+    { opacity: 0, y: 60, x: -40 },
+    { opacity: 1, y: 0, x: 0, duration: 0.8 },
+    '-=0.4'
+  )
+
+  // Final exit - gentle fade
+  .to(['.card-4-1', '.card-4-2', '.card-4-3'], {
+    opacity: 0,
+    scale: 0.9,
+    duration: 1,
+    stagger: 0.1
+  }, '+=0.5')
+  .to('.text-4-1', {
+    opacity: 0,
+    duration: 0.6
+  }, '<');
+
+// ============================================
+// PARALLAX DEPTH EFFECTS
+// Subtle movement for layering
+// ============================================
+
+// Background cards move slower (parallax depth)
+gsap.utils.toArray('.card-1-3, .card-2-3, .card-3-3, .card-4-3').forEach(card => {
+  gsap.to(card, {
+    y: -50,
+    scrollTrigger: {
+      trigger: card.closest('.story'),
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 2
     }
   });
-}
+});
 
-// Smooth Scroll for Anchor Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+// Foreground cards move faster
+gsap.utils.toArray('.card-1-1, .card-2-1, .card-3-1, .card-4-1').forEach(card => {
+  gsap.to(card, {
+    y: -80,
+    scrollTrigger: {
+      trigger: card.closest('.story'),
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.8
     }
   });
 });
 
-// Image Observer for Lazy Loading Animation
-const imageObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const img = entry.target;
-      if (img.dataset.src) {
-        img.src = img.dataset.src;
-        img.removeAttribute('data-src');
-      }
-      imageObserver.unobserve(img);
+// ============================================
+// ABOUT SECTION REVEAL
+// ============================================
+
+gsap.fromTo('.about-image',
+  { scale: 0.9, opacity: 0 },
+  {
+    scale: 1,
+    opacity: 1,
+    duration: 1.2,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.about-section',
+      start: 'top 70%',
+      end: 'top 30%',
+      toggleActions: 'play none none reverse'
     }
-  });
-}, {
-  rootMargin: '50px'
-});
-
-// Scroll Event Handler
-let ticking = false;
-
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      parallaxScroll();
-      revealOnScroll();
-      ticking = false;
-    });
-    ticking = true;
   }
-});
+);
 
-// Counter Animation for Stats
-function animateCounters() {
-  const counters = document.querySelectorAll('.stat-number');
-  const speed = 200;
-
-  counters.forEach(counter => {
-    const animate = () => {
-      const value = counter.innerText.replace(/[^0-9]/g, '');
-      const target = parseInt(value);
-      const data = parseInt(counter.getAttribute('data-target') || target);
-      const increment = data / speed;
-
-      if (!counter.classList.contains('counted')) {
-        counter.setAttribute('data-target', target);
-        counter.innerText = '0';
-        counter.classList.add('counted');
-
-        const updateCounter = () => {
-          const value = parseInt(counter.innerText.replace(/[^0-9]/g, '') || 0);
-          if (value < data) {
-            counter.innerText = Math.ceil(value + increment) + (counter.innerText.includes('+') ? '+' : '');
-            setTimeout(updateCounter, 10);
-          } else {
-            counter.innerText = counter.getAttribute('data-target');
-          }
-        };
-
-        updateCounter();
-      }
-    };
-
-    // Trigger animation when element is visible
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animate();
-          observer.unobserve(entry.target);
-        }
-      });
-    });
-
-    observer.observe(counter);
-  });
-}
-
-// Magnetic Effect for Interactive Elements
-function magneticEffect() {
-  const magneticElements = document.querySelectorAll('.service, .contact-link');
-
-  magneticElements.forEach(element => {
-    element.addEventListener('mousemove', (e) => {
-      const rect = element.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-
-      element.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px)`;
-    });
-
-    element.addEventListener('mouseleave', () => {
-      element.style.transform = 'translate(0, 0)';
-    });
-  });
-}
-
-// 3D Tilt Effect for Featured Image
-function tiltEffect() {
-  const featuredImage = document.querySelector('.featured-image');
-
-  if (featuredImage) {
-    featuredImage.addEventListener('mousemove', (e) => {
-      const rect = featuredImage.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      const rotateX = (y - centerY) / 20;
-      const rotateY = (centerX - x) / 20;
-
-      featuredImage.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-    });
-
-    featuredImage.addEventListener('mouseleave', () => {
-      featuredImage.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
-    });
+gsap.fromTo('.about-content h2',
+  { opacity: 0, y: 50 },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.about-content',
+      start: 'top 75%',
+      toggleActions: 'play none none reverse'
+    }
   }
-}
+);
 
-// Loading Animation
-function hideLoader() {
-  setTimeout(() => {
-    loader.classList.add('hidden');
-    document.body.style.overflow = 'auto';
-  }, 2500);
-}
+gsap.fromTo('.about-content p',
+  { opacity: 0, y: 30 },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    stagger: 0.15,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.about-content',
+      start: 'top 70%',
+      toggleActions: 'play none none reverse'
+    }
+  }
+);
 
-// Text Split Animation
-function splitText() {
-  const textElements = document.querySelectorAll('.hero-title, .section-title');
+gsap.fromTo('.service-item',
+  { opacity: 0, x: -30 },
+  {
+    opacity: 1,
+    x: 0,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.services-list',
+      start: 'top 80%',
+      toggleActions: 'play none none reverse'
+    }
+  }
+);
 
-  textElements.forEach(element => {
-    const text = element.innerText;
-    element.innerHTML = '';
+gsap.fromTo('.stat-item',
+  { opacity: 0, scale: 0.8 },
+  {
+    opacity: 1,
+    scale: 1,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'back.out(1.2)',
+    scrollTrigger: {
+      trigger: '.stats-grid',
+      start: 'top 85%',
+      toggleActions: 'play none none reverse'
+    }
+  }
+);
 
-    text.split('').forEach((char, index) => {
-      const span = document.createElement('span');
-      span.innerText = char;
-      span.style.display = 'inline-block';
-      span.style.animationDelay = `${index * 0.05}s`;
-      element.appendChild(span);
+// ============================================
+// CONTACT SECTION
+// ============================================
+
+gsap.fromTo('.contact-canvas h2',
+  { opacity: 0, y: 60 },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 1.2,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.contact-section',
+      start: 'top 70%',
+      toggleActions: 'play none none reverse'
+    }
+  }
+);
+
+gsap.fromTo('.contact-email',
+  { opacity: 0, y: 40 },
+  {
+    opacity: 1,
+    y: 0,
+    duration: 1,
+    ease: 'power2.out',
+    delay: 0.3,
+    scrollTrigger: {
+      trigger: '.contact-section',
+      start: 'top 65%',
+      toggleActions: 'play none none reverse'
+    }
+  }
+);
+
+// ============================================
+// SMOOTH SCROLL (Optional Enhancement)
+// ============================================
+
+// Add subtle hover effects on navigation
+const navLinks = document.querySelectorAll('.nav-menu a');
+navLinks.forEach(link => {
+  link.addEventListener('mouseenter', function() {
+    gsap.to(this, {
+      y: -3,
+      duration: 0.3,
+      ease: 'power2.out'
     });
   });
-}
 
-// Random Float Animation for Grid Items
-function randomFloat() {
-  const gridItems = document.querySelectorAll('.grid-item');
-
-  gridItems.forEach((item, index) => {
-    const duration = 3 + Math.random() * 2;
-    const delay = Math.random() * 2;
-
-    item.style.animation = `floatRandom ${duration}s ease-in-out ${delay}s infinite`;
+  link.addEventListener('mouseleave', function() {
+    gsap.to(this, {
+      y: 0,
+      duration: 0.3,
+      ease: 'power2.out'
+    });
   });
-}
-
-// Add CSS for random float
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes floatRandom {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    25% { transform: translateY(-5px) rotate(0.5deg); }
-    50% { transform: translateY(-10px) rotate(-0.5deg); }
-    75% { transform: translateY(-5px) rotate(0.5deg); }
-  }
-`;
-document.head.appendChild(style);
-
-// Initialize Everything on Load
-window.addEventListener('load', () => {
-  hideLoader();
-  createPortfolioGrid();
-  animateCounters();
-  magneticEffect();
-  tiltEffect();
-  revealOnScroll();
-
-  // Delay random float to not interfere with initial animation
-  setTimeout(randomFloat, 3000);
 });
 
-// Initial scroll check
-revealOnScroll();
+// ============================================
+// PERFORMANCE & DEBUG
+// ============================================
 
-// Resize handler
-let resizeTimer;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    revealOnScroll();
-  }, 250);
-});
-
-// Add smooth scrolling to body
-document.documentElement.style.scrollBehavior = 'smooth';
-
-// Performance optimization - Reduce animations on low-end devices
+// Disable ScrollTrigger on reduced motion preference
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  document.querySelectorAll('*').forEach(element => {
-    element.style.animation = 'none';
-    element.style.transition = 'none';
-  });
-}
-
-// Parallax on mouse move for hero section
-const hero = document.getElementById('hero');
-if (hero) {
-  hero.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX / window.innerWidth;
-    const mouseY = e.clientY / window.innerHeight;
-
-    const layers = hero.querySelectorAll('.hero-bg-layer');
-    layers.forEach((layer, index) => {
-      const speed = (index + 1) * 10;
-      const x = (window.innerWidth / 2 - e.clientX) / speed;
-      const y = (window.innerHeight / 2 - e.clientY) / speed;
-
-      layer.style.transform = `translate(${x}px, ${y}px)`;
-    });
-  });
+  ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+  gsap.set('.card, .text-block', { opacity: 1, scale: 1, x: 0, y: 0 });
 }
 
 // Console message
-console.log('%c Fashion Portfolio ✨', 'font-size: 20px; font-weight: bold; color: #d4af37;');
-console.log('%c Designed with stunning animations', 'font-size: 12px; color: #777;');
+console.log('%c Fashion Stylist Jes ', 'background: #c9a870; color: #0a0a0a; padding: 8px 12px; font-size: 14px; font-weight: bold;');
+console.log('%c Scroll-Driven Cinematic Experience ', 'background: #0a0a0a; color: #c9a870; padding: 6px 12px; font-size: 12px;');
+console.log('%c Powered by GSAP + ScrollTrigger ', 'color: #8a8a8a; font-size: 11px;');
