@@ -1,4 +1,4 @@
-const imageCount = 12; // change based on how many images you have
+const imageCount = 5; // 5 fashion/jewelry portfolio images
 const grid = document.getElementById("portfolioGrid");
 
 for (let i = 1; i <= imageCount; i++) {
