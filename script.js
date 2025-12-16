@@ -8,6 +8,10 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Detect mobile
+const isMobile = window.innerWidth <= 768;
+const scrubSpeed = isMobile ? 0.5 : 1.5; // Faster on mobile
+
 // ============================================
 // HERO INTRO ANIMATION
 // ============================================
@@ -15,7 +19,7 @@ gsap.registerPlugin(ScrollTrigger);
 const heroTimeline = gsap.timeline({
   defaults: {
     ease: 'power3.out',
-    duration: 1.2
+    duration: isMobile ? 0.8 : 1.2
   }
 });
 
@@ -40,7 +44,7 @@ const story1Timeline = gsap.timeline({
     trigger: '.story-1',
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 1.5,
+    scrub: scrubSpeed,
     // markers: true // Uncomment for debugging
   }
 });
@@ -104,7 +108,7 @@ const story2Timeline = gsap.timeline({
     trigger: '.story-2',
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 1.5
+    scrub: scrubSpeed
   }
 });
 
@@ -167,7 +171,7 @@ const story3Timeline = gsap.timeline({
     trigger: '.story-3',
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 1.5
+    scrub: scrubSpeed
   }
 });
 
@@ -230,7 +234,7 @@ const story4Timeline = gsap.timeline({
     trigger: '.story-4',
     start: 'top top',
     end: 'bottom bottom',
-    scrub: 1.5
+    scrub: scrubSpeed
   }
 });
 
