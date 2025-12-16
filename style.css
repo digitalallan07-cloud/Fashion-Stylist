@@ -602,8 +602,9 @@ body {
     font-size: 0.75rem;
   }
 
+  /* Reduce scroll length on mobile */
   .story {
-    height: 200vh;
+    height: 150vh;
   }
 
   /* Stack cards on mobile */
