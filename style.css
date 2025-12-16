@@ -80,12 +80,14 @@ body {
    ======================================== */
 
 .hero-intro {
-  height: 100vh;
+  height: auto;
+  min-height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--bg-light);
   position: relative;
+  padding: 100px 30px 60px;
 }
 
 .hero-canvas {
@@ -121,9 +123,9 @@ body {
    ======================================== */
 
 .featured-work {
-  min-height: 100vh;
+  min-height: auto;
   background: var(--bg-light);
-  padding: 120px 0;
+  padding: 60px 0 120px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -132,7 +134,7 @@ body {
 .work-header {
   text-align: center;
   padding: 0 60px;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 }
 
 .work-header h2 {
@@ -578,13 +580,18 @@ body {
   }
 
   /* Featured Work Slider Mobile */
+  .hero-intro {
+    min-height: 60vh;
+    padding: 80px 30px 40px;
+  }
+
   .featured-work {
-    padding: 80px 0;
+    padding: 40px 0 80px;
   }
 
   .work-header {
     padding: 0 30px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
   }
 
   .slider-container {
