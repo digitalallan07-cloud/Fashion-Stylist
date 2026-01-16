@@ -403,7 +403,9 @@ const gridItems = document.querySelectorAll('.grid-item');
 // Create array of all image URLs
 const imageUrls = Array.from(gridItems).map(item => {
   const bgImage = item.style.backgroundImage;
-  return bgImage.slice(5, -2); // Remove 'url("' and '")'
+  // Extract URL from background-image (handles both single and double quotes)
+  const match = bgImage.match(/url\(['"](.+)['"]\)/);
+  return match ? match[1] : '';
 });
 
 let currentImageIndex = 0;
@@ -447,8 +449,12 @@ function closeLightbox() {
 }
 
 // Navigation button event listeners
-lightboxNext.addEventListener('click', nextLightboxImage);
-lightboxPrev.addEventListener('click', prevLightboxImage);
+if (lightboxNext) {
+  lightboxNext.addEventListener('click', nextLightboxImage);
+}
+if (lightboxPrev) {
+  lightboxPrev.addEventListener('click', prevLightboxImage);
+}
 
 // Close button
 lightboxClose.addEventListener('click', closeLightbox);
@@ -474,26 +480,28 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Touch/Swipe gesture support for lightbox
-let lightboxTouchStartX = 0;
-let lightboxTouchEndX = 0;
+if (lightboxImage) {
+  let lightboxTouchStartX = 0;
+  let lightboxTouchEndX = 0;
 
-lightboxImage.addEventListener('touchstart', (e) => {
-  lightboxTouchStartX = e.changedTouches[0].screenX;
-});
+  lightboxImage.addEventListener('touchstart', (e) => {
+    lightboxTouchStartX = e.changedTouches[0].screenX;
+  });
 
-lightboxImage.addEventListener('touchend', (e) => {
-  lightboxTouchEndX = e.changedTouches[0].screenX;
-  handleLightboxSwipe();
-});
+  lightboxImage.addEventListener('touchend', (e) => {
+    lightboxTouchEndX = e.changedTouches[0].screenX;
+    handleLightboxSwipe();
+  });
 
-function handleLightboxSwipe() {
-  // Swipe left (next image)
-  if (lightboxTouchEndX < lightboxTouchStartX - 50) {
-    nextLightboxImage();
-  }
-  // Swipe right (previous image)
-  if (lightboxTouchEndX > lightboxTouchStartX + 50) {
-    prevLightboxImage();
+  function handleLightboxSwipe() {
+    // Swipe left (next image)
+    if (lightboxTouchEndX < lightboxTouchStartX - 50) {
+      nextLightboxImage();
+    }
+    // Swipe right (previous image)
+    if (lightboxTouchEndX > lightboxTouchStartX + 50) {
+      prevLightboxImage();
+    }
   }
 }
 
