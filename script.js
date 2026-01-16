@@ -396,20 +396,44 @@ navLinks.forEach(link => {
 const lightbox = document.getElementById('lightbox');
 const lightboxImage = document.querySelector('.lightbox-image');
 const lightboxClose = document.querySelector('.lightbox-close');
+const lightboxPrev = document.querySelector('.lightbox-prev');
+const lightboxNext = document.querySelector('.lightbox-next');
 const gridItems = document.querySelectorAll('.grid-item');
 
-// Open lightbox when grid item is clicked
-gridItems.forEach(item => {
-  item.addEventListener('click', function() {
-    const bgImage = this.style.backgroundImage;
-    // Extract URL from background-image
-    const imageUrl = bgImage.slice(5, -2); // Remove 'url("' and '")'
+// Create array of all image URLs
+const imageUrls = Array.from(gridItems).map(item => {
+  const bgImage = item.style.backgroundImage;
+  return bgImage.slice(5, -2); // Remove 'url("' and '")'
+});
 
-    lightboxImage.src = imageUrl;
+let currentImageIndex = 0;
+
+// Open lightbox when grid item is clicked
+gridItems.forEach((item, index) => {
+  item.addEventListener('click', function() {
+    currentImageIndex = index;
+    showLightboxImage(currentImageIndex);
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden'; // Prevent scrolling
   });
 });
+
+// Show image at specific index
+function showLightboxImage(index) {
+  lightboxImage.src = imageUrls[index];
+}
+
+// Navigate to next image
+function nextLightboxImage() {
+  currentImageIndex = (currentImageIndex + 1) % imageUrls.length;
+  showLightboxImage(currentImageIndex);
+}
+
+// Navigate to previous image
+function prevLightboxImage() {
+  currentImageIndex = (currentImageIndex - 1 + imageUrls.length) % imageUrls.length;
+  showLightboxImage(currentImageIndex);
+}
 
 // Close lightbox
 function closeLightbox() {
@@ -422,6 +446,10 @@ function closeLightbox() {
   }, 400);
 }
 
+// Navigation button event listeners
+lightboxNext.addEventListener('click', nextLightboxImage);
+lightboxPrev.addEventListener('click', prevLightboxImage);
+
 // Close button
 lightboxClose.addEventListener('click', closeLightbox);
 
@@ -432,12 +460,42 @@ lightbox.addEventListener('click', function(e) {
   }
 });
 
-// Close on Escape key
+// Keyboard navigation (Arrow keys and Escape)
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-    closeLightbox();
+  if (lightbox.classList.contains('active')) {
+    if (e.key === 'Escape') {
+      closeLightbox();
+    } else if (e.key === 'ArrowRight') {
+      nextLightboxImage();
+    } else if (e.key === 'ArrowLeft') {
+      prevLightboxImage();
+    }
   }
 });
+
+// Touch/Swipe gesture support for lightbox
+let lightboxTouchStartX = 0;
+let lightboxTouchEndX = 0;
+
+lightboxImage.addEventListener('touchstart', (e) => {
+  lightboxTouchStartX = e.changedTouches[0].screenX;
+});
+
+lightboxImage.addEventListener('touchend', (e) => {
+  lightboxTouchEndX = e.changedTouches[0].screenX;
+  handleLightboxSwipe();
+});
+
+function handleLightboxSwipe() {
+  // Swipe left (next image)
+  if (lightboxTouchEndX < lightboxTouchStartX - 50) {
+    nextLightboxImage();
+  }
+  // Swipe right (previous image)
+  if (lightboxTouchEndX > lightboxTouchStartX + 50) {
+    prevLightboxImage();
+  }
+}
 
 // ============================================
 // PERFORMANCE & DEBUG
